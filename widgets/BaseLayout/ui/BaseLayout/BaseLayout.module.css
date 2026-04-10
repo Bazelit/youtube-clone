@@ -1,0 +1,12 @@
+.container {
+    display: grid;
+    grid-template-columns: 240px auto;
+    grid-template-rows: 55px auto;
+    height: 100dvh;
+    padding-right: 12px;
+
+    > :first-child {
+        grid-column: span 2 / span 2;
+        padding: 0 16px;
+    }
+}
