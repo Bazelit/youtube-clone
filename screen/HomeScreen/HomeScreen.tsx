@@ -1,65 +1,51 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
+import React from 'react';
+import Link from 'next/link';
+import cn from 'classnames';
 
-import s from "./HomeScreen.module.css";
-import { GetAllVideosDto } from "@/shared/types/types-from-backend";
+import { GetAllVideosDto } from '@/shared/types/typesFromBackend';
+import { DEFAULT_CATEGORY, VIDEO_CATEGORIES } from '@/shared/constants/videoCategories';
+import { VideosList } from '@/widgets/VideosList';
+
+import s from './HomeScreen.module.css';
 
 type HomeScreenProps = {
-  data: GetAllVideosDto["data"];
+  data: GetAllVideosDto['data'];
+  categoryId: string;
+  categories: typeof VIDEO_CATEGORIES;
 };
 
-export const HomeScreen = ({ data }: HomeScreenProps) => {
+
+export const HomeScreen = ({ data, categoryId, categories }: HomeScreenProps) => {
   return (
     <div className={s.container}>
-      {data && data?.length > 0 ? (
-        data.map((videoInfo) => (
-          <div className={s.videoBlock} key={videoInfo.videoId}>
+      <div className={s.categoriesContainer}>
+        <Link
+          href="/"
+          className={cn(s.categoryLink, {
+              [s.activeCategoryLink]: !categoryId,
+          })}
+        >
+          {DEFAULT_CATEGORY.title}
+        </Link>
+
+        {categories.length > 0 &&
+          categories.map((category) => (
             <Link
-              href={`/video/${videoInfo.videoId}`}
-              className={s.videoPreview}
+              key={category.id}
+              href={`/${category.id}`}
+              className={cn(s.categoryLink, {
+                [s.activeCategoryLink]: category.id === categoryId,
+              })}
             >
-              <Image
-                fill
-                unoptimized
-                src={`https://img.youtube.com/vi/${videoInfo.videoId}/hqdefault.jpg`}
-                alt="Видео с ютуба"
-                className={s.videoImg}
-              />
+              {category.title}
             </Link>
+          ))
+        }
+      </div>
 
-            <div className={s.videoInfoContainer}>
-              <Link
-                href={`/profile/${videoInfo.authorUrl}`}
-                className={s.channelImage}
-              >
-                <div className={s.hiddenText}>{videoInfo.authorName}</div>
-              </Link>
-
-              <div className={s.videoInfo}>
-                <Link
-                  href={`/video/${videoInfo.videoId}`}
-                  className={s.videoTitleLink}
-                >
-                  <b>{videoInfo.title}</b>
-                </Link>
-
-                <Link
-                  href={`/profile/${videoInfo.authorUrl}`}
-                  className={s.channelNameLink}
-                >
-                  {videoInfo.authorName}
-                </Link>
-              </div>
-            </div>
-
-            <Link href={`/video/${videoInfo.videoId}`} className={s.link} />
-          </div>
-        ))
-      ) : (
-        <div>Нет видео</div>
-      )}
+      <VideosList data={data} />
     </div>
   );
 };

@@ -1,75 +1,31 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
+import React from 'react';
+import { VIDEO_CATEGORIES } from '@/shared/constants/videoCategories';
 
-import { parseYouTube, isAllowedHost, YOUTUBE_DOMAINS } from '../../shared/libs';
+import { useAddVideoForm } from '../../lib/useAddVideoForm';
 
 import s from './AddVideoScreen.module.css';
 
-const schema = z.object({
-  videoUrl: z
-    .string()
-    .min(1, { message: 'Поле не должно быть пустым' })
-    .superRefine((url, ctx) => {
-      let parsedURL: URL;
-      try {
-        parsedURL = new URL(url);
-      }
-      catch {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Поле должно содержать ссылку',
-          input: url,
-        });
-        return;
-      }
-
-      if (!isAllowedHost(parsedURL.host, YOUTUBE_DOMAINS)) {
-        ctx.addIssue({
-          code: 'custom',
-          message: 'Ссылка должна быть на YouTube',
-          input: url,
-        });
-      }
-    }),
-});
-
-type Inputs = {
-  videoUrl: string;
-};
-
 export const AddVideoScreen = () => {
-  const [videoId, setVideoId] = useState('');
-
   const {
+    videoId,
+    errors,
     register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>({  resolver: zodResolver(schema) });
-
-  const onSubmit = async (data: Inputs) => {
-    const url = new URL(data.videoUrl);
-
-    const videoId = parseYouTube(url);
-
-    if (!videoId) return;
-
-    setVideoId(videoId);
-
-    await fetch('/api/videos', {
-      method: 'POST',
-      body: JSON.stringify({ videoId }),
-    });
-  };
+    onSubmit,
+  } = useAddVideoForm();
 
   const hasVideoUrlInputError = !!errors.videoUrl?.message;
 
   return (
     <div className={s.container}>
-      <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+      <form onSubmit={onSubmit} className={s.form}>
+        <select {...register('videoCategory')} className={s.select}>
+          {VIDEO_CATEGORIES.map((data) => (
+            <option value={data.id} key={data.id}>{data.title}</option>
+          ))}
+        </select>
+
         <label>
           <input
             type="text"
@@ -82,6 +38,7 @@ export const AddVideoScreen = () => {
             <p className={s.error}>{errors.videoUrl?.message}</p>
           )}
         </label>
+
         <button className={s.submitButton}>Загрузить</button>
       </form>
 
