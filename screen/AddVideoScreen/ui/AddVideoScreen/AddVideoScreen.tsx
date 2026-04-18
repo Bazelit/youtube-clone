@@ -63,17 +63,7 @@ export const AddVideoScreen = () => {
       method: 'POST',
       body: JSON.stringify({ videoId }),
     });
-
-    const dataFromServer = await fetch('/api/videos', {
-      method: 'GET',
-    });
-
-    const response = await dataFromServer.json();
-
-    console.log('dataFromServer', response);
   };
-
-  console.log('errors', errors);
 
   const hasVideoUrlInputError = !!errors.videoUrl?.message;
 
