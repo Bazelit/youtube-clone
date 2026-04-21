@@ -1,0 +1,108 @@
+.container {
+    padding-bottom: 32px;
+    background: #1e1f20;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile {
+    position: relative;
+    width: 80%;
+    background: black;
+    border-radius: 28px;
+    padding: 108px 36px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+}
+
+.leftPart {
+    position: absolute;
+    left: 36px;
+    top: 36px;
+}
+
+.title {
+    margin-top: 24px;
+    font-size: 36px;
+}
+
+.subtitle {
+    margin-top: 16px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    height: 54px;
+    width: 500px;
+    color: white;
+    background: none;
+    border: 1px solid #8c8c8c;
+    border-radius: 4px;
+    padding: 0 16px;
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus{
+        border: 1px solid #8c8c8c;
+        -webkit-text-fill-color: white;
+        -webkit-box-shadow: 0 0 0 1000px #000 inset;
+    }
+}
+
+.passwordLabel {
+    margin-top: 16px;
+}
+
+.error {
+    margin-left: 10px;
+    margin-top: 3px;
+    color: #e70000;
+}
+
+.buttonWrapper {
+    display: flex;
+    justify-content: flex-end;
+    gap: 32px;
+    margin-top: 100px;
+}
+
+.createAccount {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    padding: 0 24px;
+    color: #a8c7fa;
+    background: transparent;
+    border-radius: 20px;
+    transition: background .3s ease;
+    border: none;
+
+    &:hover {
+        background: rgba(168, 199, 250, 0.1);
+    }
+}
+
+.signUp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    padding: 0 24px;
+    background: #a8c7fa;
+    border-radius: 20px;
+    transition: background .3s ease;
+    border: none;
+
+    &:hover {
+        background: #7bacff;
+    }
+}
+

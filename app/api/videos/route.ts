@@ -1,3 +1,5 @@
+import { videos } from '@/app/api/db';
+
 type OEmbedVideoInfo = {
   title: string;
   author_name: string;
@@ -13,25 +15,6 @@ type OEmbedVideoInfo = {
   thumbnail_url: string;
   html: string;
 };
-
-type VideoDataContent = {
-  userId: string;
-  id: string;
-  categoryId: string;
-};
-
-const videosData = new Map<string, VideoDataContent>([
-  ['3fIdpN1sxWM', { userId: '0', id: '3fIdpN1sxWM', categoryId: 'games' }],
-  ['JkUjd7iFui4', { userId: '0', id: 'JkUjd7iFui4', categoryId: 'news' }],
-  ['ApozMZRld8w', { userId: '0', id: 'ApozMZRld8w', categoryId: 'fun' }],
-  ['XCk1WBvi50A', { userId: '0', id: 'XCk1WBvi50A', categoryId: 'science' }],
-  ['mS31fc6lmFw', { userId: '0', id: 'mS31fc6lmFw', categoryId: 'news' }],
-  ['POaBzbxCgYU', { userId: '0', id: 'POaBzbxCgYU', categoryId: 'games' }],
-  ['6FxKjGPdtTc', { userId: '0', id: '6FxKjGPdtTc', categoryId: 'fun' }],
-  ['p_copoRtI8Q', { userId: '0', id: 'p_copoRtI8Q', categoryId: 'fun' }],
-  ['g6Xbnz6LRC8', { userId: '0', id: 'g6Xbnz6LRC8', categoryId: 'games' }],
-  ['HWuDdsmZmv8', { userId: '0', id: 'HWuDdsmZmv8', categoryId: 'science' }],
-]);
 
 export async function GET(request: Request) {
   const urlObject = new URL(request.url);
@@ -64,9 +47,9 @@ export async function GET(request: Request) {
   }
 
   try {
-    const categories = Array.from(new Set([...videosData].map((data) => data[1].categoryId)));
+    const categories = Array.from(new Set([...videos].map((data) => data[1].categoryId)));
 
-    const promises = [...videosData]
+    const promises = [...videos]
       .filter((data) => categoryIdParam ? data[1].categoryId === categoryIdParam : true)
       .filter((data) => userIdParam ? data[1].userId === userIdParam : true)
       .map(async (data) => {
@@ -106,11 +89,11 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   const data = await request.json();
 
-  if (videosData.has(data.videoId)) {
+  if (videos.has(data.videoId)) {
     return Response.json({ ok: false, error: 'Видео ранее уже было добавлено' }, { status: 400 });
   }
 
-  videosData.set(data.videoId, {
+  videos.set(data.videoId, {
     id: data.videoId,
     userId: data.userId,
     categoryId: data.categoryId,

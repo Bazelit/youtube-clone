@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import { BaseLayout } from '@/widgets/BaseLayout';
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "YouTube Clone",
-  description: "A simple YouTube clone built with Next.js",
+  description: "Clone of YouTube!",
 };
 
 export default function RootLayout({
@@ -27,9 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <BaseLayout>
-          {children}
-        </BaseLayout>
+        {children}
       </body>
     </html>
   );

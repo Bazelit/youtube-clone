@@ -16,3 +16,8 @@ export type GetAllVideosDto = {
   data: VideoDto[];
   categories: string[];
 };
+
+export type AuthUserDto = {
+  id: string;
+  nickname: string;
+};

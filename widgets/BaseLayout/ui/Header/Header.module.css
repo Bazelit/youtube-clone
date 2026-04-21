@@ -55,3 +55,22 @@
     display: flex;
     gap: 16px;
 }
+
+.signIn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 111px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 18px;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.3);
+    }
+}
+
+.icon {
+    filter: invert(1);
+}
