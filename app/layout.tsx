@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "YouTube Clone",
-  description: "Clone of YouTube!",
+  description: "Пожалуйста, возьмите меня на работу!",
 };
 
 export default function RootLayout({

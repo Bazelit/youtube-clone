@@ -1,7 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { cookies} from 'next/headers';
 import { UserInfoFromToken, users } from '../db';
-import { env } from '@/shared/libs';
+import { env } from '@/shared/libs/env';
 import { AUTH_COOKIE_NAME } from '@/shared/constants/cookiesNames';
 
 export async function GET() {
